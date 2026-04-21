@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mosquée Marocaine – L'Arbre de Vie</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --emerald:   #1a6b3c;
+    --emerald-lt:#2e9957;
+    --gold:      #c9993a;
+    --gold-lt:   #f0c96e;
+    --ivory:     #fdf6e3;
+    --deep:      #0d1f13;
+    --tile-blue: #2a5f8f;
+    --tile-teal: #1e7f6e;
+    --shadow:    rgba(10,30,15,.6);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    font-family: 'Amiri', serif;
+  }
+
+  /* ── Sky & stars ── */
+  .sky {
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #0d2a1e 0%, #060f09 70%);
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    animation: twinkle var(--d,3s) ease-in-out infinite alternate;
+    opacity: .7;
+  }
+  @keyframes twinkle { from{opacity:.2;transform:scale(.8)} to{opacity:1;transform:scale(1.2)} }
+
+  /* ── Moon ── */
+  .moon {
+    position: fixed;
+    top: 6%; right: 10%;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle at 35% 35%, #fffbe0, #e8d890);
+    border-radius: 50%;
+    box-shadow: 0 0 40px 10px rgba(240,210,80,.25), 0 0 80px 20px rgba(240,210,80,.1);
+    z-index: 1;
+    animation: moonGlow 4s ease-in-out infinite alternate;
+  }
+  @keyframes moonGlow {
+    from { box-shadow: 0 0 40px 10px rgba(240,210,80,.25), 0 0 80px 20px rgba(240,210,80,.08); }
+    to   { box-shadow: 0 0 60px 20px rgba(240,210,80,.4),  0 0 120px 40px rgba(240,210,80,.18); }
+  }
+  /* crescent cut */
+  .moon::after {
+    content:'';
+    position:absolute;
+    top:-4px; left:14px;
+    width:66px; height:66px;
+    border-radius:50%;
+    background: #060f09;
+  }
+
+  /* ── Scene wrapper ── */
+  .scene {
+    position: relative;
+    width: min(900px, 100vw);
+    height: 100vh;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* ── Ground / courtyard ── */
+  .ground {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 22%;
+    background: repeating-linear-gradient(
+      90deg,
+      #1b3a28 0px, #1b3a28 59px,
+      #153020 60px, #153020 120px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 59px,
+      rgba(0,0,0,.3) 60px, rgba(0,0,0,.3) 62px
+    );
+    background-blend-mode: overlay;
+  }
+  /* zellige mosaic strip */
+  .ground::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:8px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--tile-teal) 0,var(--tile-teal) 12px,
+      var(--gold) 12px,var(--gold) 14px,
+      var(--tile-blue) 14px,var(--tile-blue) 26px,
+      var(--gold) 26px,var(--gold) 28px
+    );
+  }
+
+  /* ── Mosque silhouette ── */
+  .mosque {
+    position: absolute;
+    bottom: 22%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+  }
+
+  /* Main dome */
+  .dome-main {
+    position: relative;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dome-main .dome-top {
+    width: 180px; height: 100px;
+    background: linear-gradient(160deg, #1e6640 30%, #0d3320);
+    border-radius: 90px 90px 0 0;
+    border: 2px solid var(--gold);
+    border-bottom: none;
+    position: relative;
+  }
+  .dome-main .dome-top::after {
+    content:'';
+    position:absolute;
+    top:-18px; left:50%; transform:translateX(-50%);
+    width:6px; height:22px;
+    background: var(--gold);
+  }
+  /* crescent on dome */
+  .crescent {
+    position:absolute;
+    top:-36px; left:50%; transform:translateX(-50%);
+    width:20px; height:20px;
+    border:3px solid var(--gold-lt);
+    border-radius:50%;
+    animation: spinCrescent 10s linear infinite;
+  }
+  .crescent::after {
+    content:'';
+    position:absolute;
+    top:-2px; left:5px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background: var(--deep);
+  }
+  @keyframes spinCrescent { to{transform:translateX(-50%) rotate(360deg)} }
+
+  .dome-main .body {
+    width: 220px; height: 130px;
+    background: linear-gradient(180deg, #1a5a38 0%, #0e3322 100%);
+    border-left: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 16px;
+  }
+
+  /* arched window */
+  .arch-window {
+    width: 44px; height: 70px;
+    border: 2px solid var(--gold);
+    border-radius: 22px 22px 0 0;
+    background: rgba(255,200,80,.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .arch-window::after {
+    content:'';
+    position:absolute;
+    inset:4px; border-radius:18px 18px 0 0;
+    background: linear-gradient(180deg, rgba(240,180,60,.25), transparent);
+    animation: shimmerArch 3s ease-in-out infinite alternate;
+  }
+  @keyframes shimmerArch { from{opacity:.4} to{opacity:1} }
+
+  /* Side wings */
+  .wing {
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wing .dome-sm {
+    width: 110px; height: 60px;
+    background: linear-gradient(150deg, #1e6640, #0d3320);
+    border-radius: 55px 55px 0 0;
+    border: 1.5px solid var(--gold);
+    border-bottom: none;
+  }
+  .wing .wall {
+    width: 140px; height: 90px;
+    background: linear-gradient(180deg, #1a5a38, #0e3322);
+    border: 1.5px solid var(--gold);
+    border-bottom: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 12px;
+  }
+  .arch-sm {
+    width: 28px; height: 44px;
+    border: 1.5px solid var(--gold);
+    border-radius: 14px 14px 0 0;
+    background: rgba(255,200,80,.06);
+  }
+
+  /* ── Minaret ── */
+  .minaret {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .minaret.left  { left: 8%; }
+  .minaret.right { right: 8%; }
+
+  .minaret .spire {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .minaret .tip {
+    width: 0; height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 28px solid var(--gold);
+  }
+  .minaret .cap {
+    width: 60px; height: 22px;
+    background: var(--gold);
+    clip-path: polygon(10% 100%, 90% 100%, 80% 0%, 20% 0%);
+  }
+  .minaret .balcony {
+    width: 70px; height: 8px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .minaret .shaft {
+    width: 46px;
+    height: 220px;
+    background: linear-gradient(180deg, #1d6b42 0%, #0e3322 100%);
+    border: 1.5px solid var(--gold);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px 0;
+  }
+  .minaret .shaft::before,
+  .minaret .shaft::after {
+    content:'';
+    position:absolute;
+    left:50%; transform:translateX(-50%);
+    width:60px; height:3px;
+    background: var(--gold);
+  }
+  .minaret .shaft::before { top:25%; }
+  .minaret .shaft::after  { top:55%; }
+  .mini-arch {
+    width: 20px; height: 30px;
+    border: 1.5px solid var(--gold);
+    border-radius: 10px 10px 0 0;
+    background: rgba(255,200,80,.08);
+  }
+  .minaret .base {
+    width: 60px; height: 20px;
+    background: linear-gradient(180deg, #1d6b42, #0e3322);
+    border: 1.5px solid var(--gold);
+  }
+
+  /* ── Tree ── */
+  .tree-container {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 360px;
+    z-index: 10;
+  }
+
+  /* Trunk */
+  .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 110px;
+    background: linear-gradient(90deg, #3d1f0a, #7a3e15, #3d1f0a);
+    border-radius: 4px;
+  }
+  .trunk::before {
+    content:'';
+    position:absolute;
+    top:40%; left:100%;
+    width:40px; height:12px;
+    background: linear-gradient(90deg, #5a2e0e, #3d1f0a);
+    border-radius:0 8px 8px 0;
+    transform-origin:0 50%;
+    transform:rotate(-20deg);
+  }
+  .trunk::after {
+    content:'';
+    position:absolute;
+    top:50%; right:100%;
+    width:34px; height:10px;
+    background: linear-gradient(270deg, #5a2e0e, #3d1f0a);
+    border-radius:8px 0 0 8px;
+    transform-origin:100% 50%;
+    transform:rotate(15deg);
+  }
+
+  /* Branch system */
+  .branches {
+    position: absolute;
+    bottom: 108px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 250px;
+  }
+
+  .branch {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    transform-origin: bottom center;
+    background: linear-gradient(0deg, #5a2e0e, #3d1f0a);
+    border-radius: 2px;
+  }
+
+  /* Leaves cluster */
+  .leaf-cluster {
+    position: absolute;
+    border-radius: 50% 60% 55% 45%;
+    background: radial-gradient(circle at 35% 35%, var(--emerald-lt), var(--emerald));
+    animation: sway var(--sw, 4s) ease-in-out infinite alternate;
+    transform-origin: bottom center;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.4));
+    box-shadow: inset -4px -4px 12px rgba(0,0,0,.3);
+  }
+  @keyframes sway {
+    from { transform: rotate(calc(var(--tilt,-3) * 1deg)) scale(1);   }
+    to   { transform: rotate(calc(var(--tilt,-3) * -1deg)) scale(1.03); }
+  }
+
+  /* Fireflies / light orbs among leaves */
+  .firefly {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold-lt);
+    box-shadow: 0 0 6px 2px var(--gold-lt);
+    animation: fly var(--fd,5s) ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes fly {
+    0%   { opacity:0; transform:translate(0,0); }
+    20%  { opacity:1; }
+    80%  { opacity:1; }
+    100% { opacity:0; transform:translate(var(--fx,20px), var(--fy,-30px)); }
+  }
+
+  /* ── Arabic calligraphy banner ── */
+  .calligraphy {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 20;
+    animation: fadeInDown 2s ease forwards;
+    opacity: 0;
+  }
+  @keyframes fadeInDown {
+    from { opacity:0; transform:translateX(-50%) translateY(-20px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+  }
+  .calligraphy .arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    color: var(--gold-lt);
+    text-shadow: 0 0 20px rgba(200,150,40,.6);
+    letter-spacing: .08em;
+  }
+  .calligraphy .subtitle {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(.55rem, 1.4vw, .85rem);
+    color: rgba(240,200,100,.7);
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ornament line */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .ornament-line {
+    height: 1px;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .ornament-diamond {
+    width: 7px; height: 7px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* ── Fountain ── */
+  .fountain {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+  .fountain-base {
+    width: 90px; height: 18px;
+    background: radial-gradient(ellipse, #1e6640, #0e3322);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+  }
+  .fountain-pillar {
+    width: 10px; height: 26px;
+    background: linear-gradient(90deg, var(--gold-lt), var(--gold));
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+  .water-drop {
+    position: absolute;
+    width: 3px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: rgba(120,200,255,.7);
+    animation: drip var(--dd,1.2s) ease-in infinite;
+    opacity: 0;
+    bottom: 26px;
+    left: 50%;
+  }
+  @keyframes drip {
+    0%   { opacity:.8; transform:translateX(-50%) translateY(0) scaleY(1); height:6px; }
+    70%  { opacity:.6; }
+    100% { opacity:0;  transform:translateX(calc(-50% + var(--dx,0px))) translateY(30px) scaleY(1.5); height:10px; }
+  }
+
+  /* ── Particles (petals) ── */
+  .petal {
+    position: fixed;
+    width: 6px; height: 9px;
+    border-radius: 50% 0 50% 0;
+    background: var(--emerald-lt);
+    opacity: 0;
+    animation: petalFall var(--pf,8s) linear infinite;
+    transform: rotate(var(--pr,45deg));
+  }
+  @keyframes petalFall {
+    0%   { opacity:.8; transform:rotate(var(--pr,45deg)) translateY(0); }
+    100% { opacity:0;  transform:rotate(calc(var(--pr,45deg) + 360deg)) translateY(100vh); }
+  }
+
+  /* ── Light rays from tree ── */
+  .rays {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 2px;
+    z-index: 9;
+  }
+  .ray {
+    position: absolute;
+    width: 2px;
+    height: 180px;
+    background: linear-gradient(0deg, rgba(200,160,50,.3), transparent);
+    transform-origin: bottom center;
+    border-radius: 1px;
+    animation: rayPulse 4s ease-in-out infinite alternate;
+  }
+  @keyframes rayPulse { from{opacity:.1} to{opacity:.35} }
+
+</style>
+</head>
+<body>
+
+<!-- Background sky -->
+<div class="sky" id="sky"></div>
+<div class="moon"></div>
+
+<div class="scene">
+
+  <!-- Calligraphy header -->
+  <div class="calligraphy">
+    <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <div class="subtitle">شجرة الحياة في رحاب المسجد</div>
+  </div>
+
+  <!-- Mosque -->
+  <div class="mosque">
+    <!-- Left minaret -->
+    <div class="minaret left">
+      <div class="spire">
+        <div class="tip"></div>
+        <div class="cap"></div>
+      </div>
+      <div class="balcony"></div>
+      <div class="shaft">
+        <div class="mini-arch"></div>
+        <div class="mini-arch"></div>
+      </div>
+      <div class="base"></div>
+    </div>
+
+    <!-- Left wing -->
+    <div class="wing">
+      <div class="dome-sm"></div>
+      <div class="wall">
+        <div class="arch-sm"></div>
+        <div class="arch-sm"></div>
+      </div>
+    </div>
+
+    <!-- Central dome -->
+    <div class="dome-main">
+      <div class="dome-top">
+        <div class="crescent"></div>
+      </div>
+      <div class="body">
+        <div class="arch-window"></div>
+      </div>
+    </div>
+
+    <!-- Right wing -->
+    <div class="wing">
+      <div class="dome-sm"></div>
+      <div class="wall">
+        <div class="arch-sm"></div>
+        <div class="arch-sm"></div>
+      </div>
+    </div>
+
+    <!-- Right minaret -->
+    <div class="minaret right">
+      <div class="spire">
+        <div class="tip"></div>
+        <div class="cap"></div>
+      </div>
+      <div class="balcony"></div>
+      <div class="shaft">
+        <div class="mini-arch"></div>
+        <div class="mini-arch"></div>
+      </div>
+      <div class="base"></div>
+    </div>
+  </div>
+
+  <!-- Fountain (behind tree) -->
+  <div class="fountain">
+    <div class="fountain-pillar"></div>
+    <div class="fountain-base"></div>
+  </div>
+
+  <!-- Animated Tree -->
+  <div class="tree-container" id="tree">
+    <div class="rays" id="rays"></div>
+    <div class="branches" id="branches"></div>
+    <div class="trunk"></div>
+  </div>
+
+  <!-- Ground -->
+  <div class="ground"></div>
+
+</div>
+
+<script>
+// ── Stars ──────────────────────────────────────────────
+const sky = document.getElementById('sky');
+for (let i = 0; i < 160; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const sz = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `
+    width:${sz}px; height:${sz}px;
+    left:${Math.random()*100}%; top:${Math.random()*70}%;
+    --d:${2+Math.random()*5}s;
+    animation-delay:${Math.random()*4}s;
+  `;
+  sky.appendChild(s);
+}
+
+// ── Light rays ─────────────────────────────────────────
+const raysEl = document.getElementById('rays');
+for (let i = 0; i < 8; i++) {
+  const r = document.createElement('div');
+  r.className = 'ray';
+  r.style.cssText = `
+    transform: rotate(${i*45}deg);
+    animation-delay: ${i*0.5}s;
+    height: ${120+Math.random()*80}px;
+  `;
+  raysEl.appendChild(r);
+}
+
+// ── Tree branches & leaves ─────────────────────────────
+const branchesEl = document.getElementById('branches');
+
+const leafData = [
+  // [bottom%, left%, width, height, tilt, swaySpeed, swayDelay]
+  [60, 40, 110, 90, -4, 3.8, 0],
+  [72, 30, 90,  75,  5, 4.2, .5],
+  [68, 55, 95,  80,  3, 3.5, .3],
+  [80, 35, 75,  65, -6, 4.6, .8],
+  [78, 52, 80,  68,  4, 3.9, .2],
+  [85, 28, 65,  55, -3, 4.1, .6],
+  [83, 57, 68,  58,  6, 3.7, .4],
+  [88, 44, 55,  48, -2, 4.4, .9],
+  [90, 22, 50,  44,  5, 5.0, .1],
+  [91, 62, 52,  46, -5, 4.8, .7],
+  [93, 38, 45,  40,  3, 3.6, .3],
+  [94, 48, 42,  38, -4, 4.3, .5],
+  [65, 42, 85,  72,  2, 4.0, .2],
+];
+
+leafData.forEach(([b, l, w, h, tilt, sw, sd]) => {
+  const leaf = document.createElement('div');
+  leaf.className = 'leaf-cluster';
+  leaf.style.cssText = `
+    bottom:${b}%; left:${l}%;
+    width:${w}px; height:${h}px;
+    --tilt:${tilt}; --sw:${sw}s;
+    animation-delay:${sd}s;
+    z-index:${Math.floor(b)};
+  `;
+  branchesEl.appendChild(leaf);
+
+  // fireflies per cluster
+  for (let f = 0; f < 2; f++) {
+    const fly = document.createElement('div');
+    fly.className = 'firefly';
+    fly.style.cssText = `
+      bottom:${b + Math.random()*8}%; left:${l + Math.random()*10}%;
+      --fd:${4+Math.random()*4}s;
+      --fx:${(Math.random()-.5)*60}px;
+      --fy:${-(20+Math.random()*40)}px;
+      animation-delay:${Math.random()*5}s;
+      position:fixed;
+    `;
+    document.querySelector('.scene').appendChild(fly);
+  }
+});
+
+// ── Fountain drops ─────────────────────────────────────
+const fountain = document.querySelector('.fountain');
+for (let i = 0; i < 7; i++) {
+  const d = document.createElement('div');
+  d.className = 'water-drop';
+  d.style.cssText = `
+    --dd:${0.8+Math.random()*0.8}s;
+    --dx:${(Math.random()-.5)*40}px;
+    animation-delay:${Math.random()*1.5}s;
+  `;
+  fountain.appendChild(d);
+}
+
+// ── Falling petals ─────────────────────────────────────
+const greens = ['#2e9957','#1a6b3c','#3cb96e','#156b35','#4caf70'];
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const color = greens[Math.floor(Math.random()*greens.length)];
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    top:${-10-Math.random()*30}%;
+    background:${color};
+    --pf:${6+Math.random()*8}s;
+    --pr:${Math.random()*180}deg;
+    animation-delay:${Math.random()*10}s;
+    width:${4+Math.random()*5}px;
+    height:${7+Math.random()*7}px;
+  `;
+  document.body.appendChild(p);
+}
+</script>
+</body>
+</html>
