@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexFlow — AI Automation for Modern Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0a0a0f;
+    --ink-muted: #5a5a72;
+    --ink-faint: #9b9bb0;
+    --surface: #fafaf8;
+    --surface-2: #f0efe9;
+    --accent: #1a1aff;
+    --accent-glow: rgba(26,26,255,0.12);
+    --gold: #c8a84b;
+    --border: rgba(10,10,15,0.1);
+    --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    overflow-x: hidden;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(250,250,248,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.875rem; color: var(--ink-muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: #1a1aff; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 7rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(26,26,255,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(200,168,75,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin-bottom: 2rem;
+    font-weight: 400;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--ink-muted);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ─── WAITLIST FORM ─── */
+  .waitlist-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto 1.25rem;
+    position: relative;
+  }
+  .waitlist-form input {
+    flex: 1;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: var(--white);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .waitlist-form input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .waitlist-form input::placeholder { color: var(--ink-faint); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .form-note { font-size: 0.78rem; color: var(--ink-faint); }
+
+  .success-msg {
+    display: none;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: #166534;
+    max-width: 440px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    display: block;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--ink-faint); font-weight: 300; }
+
+  /* ─── MARQUEE ─── */
+  .marquee-wrap {
+    overflow: hidden;
+    background: var(--ink);
+    padding: 1rem 0;
+    white-space: nowrap;
+  }
+  .marquee {
+    display: inline-block;
+    animation: scroll 25s linear infinite;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .marquee span { margin: 0 2rem; color: rgba(255,255,255,0.25); }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── SERVICES ─── */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    line-height: 1.15;
+    max-width: 600px;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3.5rem;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+  .service-card:hover { background: var(--white); }
+  .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    background: var(--ink);
+    color: var(--white);
+  }
+  .service-card h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .service-card p {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section {
+    background: var(--ink);
+    color: var(--white);
+    max-width: 100%;
+    padding: 6rem 3rem;
+  }
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .how-section .section-label { color: rgba(255,255,255,0.35); }
+  .how-section h2 { color: var(--white); max-width: 500px; }
+  .how-section h2 em { color: var(--gold); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 1.7rem; left: 3rem; right: 3rem;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .step { padding: 0 1.5rem; }
+  .step-num {
+    width: 3.5rem; height: 3.5rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .step h4 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+  .step p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── TESTIMONIAL / SOCIAL PROOF ─── */
+  .proof-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .big-quote {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.35;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .quote-attr {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .quote-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+  }
+  .quote-name { font-size: 0.875rem; font-weight: 500; }
+  .quote-role { font-size: 0.8rem; color: var(--ink-faint); font-weight: 300; }
+
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .benefit {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .benefit-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    background: var(--white);
+    margin-top: 0.1rem;
+  }
+  .benefit-text h4 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  .benefit-text p {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: var(--ink);
+    color: var(--white);
+    max-width: 100%;
+    padding: 6rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,26,255,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .cta-section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    color: var(--white);
+    max-width: 600px;
+    margin: 0 auto 1.25rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .cta-section h2 em { color: var(--gold); }
+  .cta-section p { color: rgba(255,255,255,0.5); margin-bottom: 2.5rem; font-weight: 300; }
+  .cta-form { display: flex; gap: 0.75rem; max-width: 440px; margin: 0 auto 1rem; }
+  .cta-form input {
+    flex: 1;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
+  .cta-form input:focus { border-color: var(--accent); }
+  .btn-accent {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-accent:hover { opacity: 0.85; transform: translateY(-1px); }
+  .cta-note { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    max-width: 100%;
+    padding: 2.5rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+  }
+  footer a { color: var(--ink-faint); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.35s; }
+  .delay-4 { animation-delay: 0.5s; }
+  .delay-5 { animation-delay: 0.65s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .steps::before { display: none; }
+    .proof-section { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .cta-form { flex-direction: column; }
+    .how-section { padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Nex<span>Flow</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#waitlist">Pricing</a></li>
+  </ul>
+  <a href="#waitlist" class="nav-cta">Join waitlist</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="badge fade-up">
+    <span class="badge-dot"></span>
+    Now accepting early access applications
+  </div>
+  <h1 class="fade-up delay-1">
+    Automate the work.<br><em>Keep the vision.</em>
+  </h1>
+  <p class="hero-sub fade-up delay-2">
+    NexFlow builds AI-powered automation systems tailored to your business — so your team focuses on what only humans can do.
+  </p>
+  <div class="fade-up delay-3" style="width:100%">
+    <div class="waitlist-form" id="hero-form">
+      <input type="email" id="hero-email" placeholder="Enter your email address" />
+      <button class="btn-primary" onclick="handleSignup('hero')">Reserve my spot</button>
+    </div>
+    <div class="success-msg" id="hero-success">
+      🎉 You're on the list! We'll be in touch soon.
+    </div>
+    <p class="form-note fade-up delay-4">No credit card required · Free early access</p>
+  </div>
+  <div class="hero-stats fade-up delay-5">
+    <div class="stat">
+      <span class="stat-num">80%</span>
+      <span class="stat-label">Average time saved</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3×</span>
+      <span class="stat-label">Faster workflows</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">300+</span>
+      <span class="stat-label">Integrations</span>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    Workflow Automation <span>✦</span> AI Agents <span>✦</span> Data Processing <span>✦</span> CRM Automation <span>✦</span> Document AI <span>✦</span> Email Automation <span>✦</span> Lead Generation <span>✦</span> Custom Integrations <span>✦</span> AI Chatbots <span>✦</span> Reporting &amp; Analytics &nbsp;&nbsp;&nbsp;
+    Workflow Automation <span>✦</span> AI Agents <span>✦</span> Data Processing <span>✦</span> CRM Automation <span>✦</span> Document AI <span>✦</span> Email Automation <span>✦</span> Lead Generation <span>✦</span> Custom Integrations <span>✦</span> AI Chatbots <span>✦</span> Reporting &amp; Analytics &nbsp;&nbsp;&nbsp;
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">What we build</p>
+  <h2>AI automation for <em>every</em> part of your business</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <h3>Workflow Automation</h3>
+      <p>Eliminate repetitive manual tasks with intelligent pipelines that connect your tools and trigger actions automatically.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3>AI Agents</h3>
+      <p>Deploy autonomous agents that research, draft, respond, and act — available 24/7 without supervision.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Data Intelligence</h3>
+      <p>Transform raw data into actionable insights with automated extraction, cleaning, and reporting systems.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💌</div>
+      <h3>Sales & Marketing</h3>
+      <p>Auto-qualify leads, personalize outreach at scale, and keep your CRM always up to date — on autopilot.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📄</div>
+      <h3>Document AI</h3>
+      <p>Extract, process, and route information from contracts, invoices, and forms in seconds, not hours.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔗</div>
+      <h3>Custom Integrations</h3>
+      <p>We build bespoke connectors and APIs that make your existing stack work together seamlessly with AI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="how-section" id="how">
+  <div class="how-inner">
+    <p class="section-label">How it works</p>
+    <h2>From discovery to deployment in <em>weeks</em></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Discovery call</h4>
+        <p>We audit your current workflows and identify the highest-value automation opportunities.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Blueprint</h4>
+        <p>Our engineers design a custom automation architecture tailored to your tools and goals.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Build & test</h4>
+        <p>We build, iterate, and stress-test every system before it touches your production environment.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Deploy & scale</h4>
+        <p>Go live with full monitoring, support, and a roadmap for continuous improvement.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-section">
+  <div>
+    <p class="section-label">Early users</p>
+    <p class="big-quote">"NexFlow saved our ops team 30 hours a week. What used to take days now happens before I finish my morning coffee."</p>
+    <div class="quote-attr">
+      <div class="quote-avatar">SR</div>
+      <div>
+        <div class="quote-name">Sofia Reyes</div>
+        <div class="quote-role">Head of Operations, Meridian Health</div>
+      </div>
+    </div>
+  </div>
+  <div class="benefits-list">
+    <div class="benefit">
+      <div class="benefit-icon">🧠</div>
+      <div class="benefit-text">
+        <h4>Built on cutting-edge AI</h4>
+        <p>We use the latest models from OpenAI, Anthropic, and others — matched to your exact use case.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔒</div>
+      <div class="benefit-text">
+        <h4>Enterprise-grade security</h4>
+        <p>Your data stays yours. We follow SOC 2 practices and support on-premise deployments.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">📈</div>
+      <div class="benefit-text">
+        <h4>Measurable ROI</h4>
+        <p>Every engagement includes KPI tracking so you see exactly what the automation delivers.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🤝</div>
+      <div class="benefit-text">
+        <h4>Dedicated support team</h4>
+        <p>A named engineer on your account. Not a ticket queue — a real partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / WAITLIST -->
+<div class="cta-section" id="waitlist">
+  <div class="cta-inner">
+    <p class="section-label" style="color:rgba(255,255,255,0.35)">Early access</p>
+    <h2>Be first when <em>we launch</em></h2>
+    <p>Join our waitlist for early pricing, priority onboarding, and a free workflow audit.</p>
+    <div class="cta-form" id="cta-form">
+      <input type="email" id="cta-email" placeholder="you@company.com" />
+      <button class="btn-accent" onclick="handleSignup('cta')">Join waitlist</button>
+    </div>
+    <div class="success-msg" id="cta-success" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.85);">
+      🎉 You're on the list! We'll be in touch soon.
+    </div>
+    <p class="cta-note" id="cta-count">Already 247 businesses on the list</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a class="logo" href="#" style="font-size:1.1rem;">Nex<span style="color:#1a1aff">Flow</span></a>
+  <span>© 2025 NexFlow. All rights reserved.</span>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="mailto:hello@nexflow.ai">Contact</a>
+  </div>
+</footer>
+
+<script>
+  let count = 247;
+
+  function handleSignup(source) {
+    const input = document.getElementById(source === 'hero' ? 'hero-email' : 'cta-email');
+    const email = input.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      input.style.borderColor = '#ef4444';
+      input.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+      input.placeholder = 'Please enter a valid email';
+      setTimeout(() => {
+        input.style.borderColor = '';
+        input.style.boxShadow = '';
+        input.placeholder = source === 'hero' ? 'Enter your email address' : 'you@company.com';
+      }, 2000);
+      return;
+    }
+
+    count++;
+    document.getElementById(source + '-form').style.display = 'none';
+    document.getElementById(source + '-success').style.display = 'block';
+    if (document.getElementById('cta-count')) {
+      document.getElementById('cta-count').textContent = `Already ${count} businesses on the list`;
+    }
+
+    console.log('Waitlist signup:', email);
+  }
+
+  document.querySelectorAll('input[type="email"]').forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const source = input.id.includes('hero') ? 'hero' : 'cta';
+        handleSignup(source);
+      }
+    });
+    input.addEventListener('input', () => {
+      input.style.borderColor = '';
+      input.style.boxShadow = '';
+    });
+  });
+</script>
+</body>
+</html>
